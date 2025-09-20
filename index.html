@@ -1,0 +1,1945 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Showcase - LNC TECHNOLOGIE</title>
+    <style>
+        :root {
+            --primary: #0047AB;
+            --primary-light: #3F75D5;
+            --primary-dark: #00347D;
+            --accent: #00A3E0;
+            --white: #ffffff;
+            --light-gray: #f5f7fa;
+            --dark-gray: #333333;
+            
+            /* Dark mode variables */
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --card-bg: #f5f7fa;
+            --header-bg: var(--primary);
+            --footer-bg: var(--primary-dark);
+            --section-bg: #ffffff;
+            --section-alt-bg: #f5f7fa;
+            --input-bg: rgba(255, 255, 255, 0.8);
+            --contact-form-bg: rgba(255, 255, 255, 0.1);
+            --modal-bg: rgba(0, 0, 0, 0.8);
+        }
+        
+        /* Dark mode styles */
+        body.dark-mode {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --card-bg: #1e1e1e;
+            --header-bg: #001a3d;
+            --footer-bg: #000d1f;
+            --section-bg: #121212;
+            --section-alt-bg: #1e1e1e;
+            --input-bg: rgba(30, 30, 30, 0.8);
+            --contact-form-bg: rgba(30, 30, 30, 0.3);
+            --modal-bg: rgba(0, 0, 0, 0.9);
+        }
+        
+        /* RTL Support */
+        [dir="rtl"] {
+            text-align: right;
+        }
+        
+        [dir="rtl"] .nav-container {
+            direction: rtl;
+        }
+        
+        [dir="rtl"] .nav-menu li {
+            margin-left: 0;
+            margin-right: 2rem;
+        }
+        
+        [dir="rtl"] .theme-toggle {
+            margin-left: 0;
+            margin-right: 1.5rem;
+        }
+        
+        [dir="rtl"] .example-details h3::after {
+            left: auto;
+            right: 0;
+        }
+        
+        [dir="rtl"] .contact-details i {
+            margin-right: 0;
+            margin-left: 1rem;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        /* Arabic font support */
+        [lang="ar"], [lang="ar"] * {
+            font-family: 'Segoe UI', 'Arial Unicode MS', 'Tahoma', sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        header {
+            background-color: var(--header-bg);
+            color: var(--white);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            background-color: rgba(0, 26, 61, 0.9);
+            padding: 0.7rem 0;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-menu li {
+            margin-left: 2rem;
+        }
+        
+        .nav-menu a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--white);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+        
+        /* Language Switcher Styles */
+        .language-switcher {
+            position: relative;
+            margin-left: 1rem;
+        }
+        
+        .lang-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .lang-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .lang-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            min-width: 120px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .lang-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .lang-option {
+            padding: 0.7rem 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .lang-option:hover {
+            background: var(--light-gray);
+        }
+        
+        .lang-option.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+        
+        .lang-option:first-child {
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .lang-option:last-child {
+            border-radius: 0 0 8px 8px;
+        }
+        
+        .theme-toggle {
+            background: transparent;
+            border: none;
+            color: var(--white);
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            transform: rotate(30deg);
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: var(--white);
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .main-content {
+            margin-top: 80px;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--white);
+            padding: 8rem 0 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('/api/placeholder/1400/800') center/cover;
+            opacity: 0.1;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            animation: fadeIn 1s ease-out 0.3s forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .portfolio-examples {
+            padding: 6rem 0;
+            background-color: var(--section-bg);
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-header h2 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+        
+        .section-header p {
+            max-width: 600px;
+            margin: 1rem auto 0;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+        
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 4rem;
+        }
+        
+        .example-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .example-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .example-image {
+            position: relative;
+            overflow: hidden;
+            height: 220px;
+        }
+        
+        .example-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .example-card:hover .example-image img {
+            transform: scale(1.08);
+        }
+        
+        .example-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .example-card:hover .example-overlay {
+            opacity: 0.9;
+        }
+        
+        .example-details {
+            padding: 1.8rem;
+        }
+        
+        .example-details h3 {
+            color: var(--primary-dark);
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .example-details h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background-color: var(--accent);
+        }
+        
+        .example-details p {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+        
+        .example-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .tech-tag {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .example-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid var(--primary);
+            text-align: center;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 71, 171, 0.3);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+        
+        .submission-section {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, var(--section-alt-bg) 0%, var(--light-gray) 100%);
+        }
+        
+        .submission-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .submission-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--light-gray);
+        }
+        
+        .tab-button {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            background: transparent;
+            color: var(--text-color);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .tab-button.active {
+            color: var(--primary);
+        }
+        
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .upload-area {
+            border: 2px dashed var(--primary);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .upload-area:hover {
+            background-color: rgba(0, 71, 171, 0.05);
+        }
+        
+        .upload-area.dragover {
+            background-color: rgba(0, 71, 171, 0.1);
+            border-color: var(--accent);
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .upload-text {
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .upload-subtext {
+            color: var(--text-color);
+            opacity: 0.6;
+            font-size: 0.9rem;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid rgba(0, 71, 171, 0.2);
+            border-radius: 8px;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 71, 171, 0.1);
+        }
+        
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        
+        .example-templates {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .template-option {
+            border: 2px solid rgba(0, 71, 171, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .template-option:hover {
+            border-color: var(--primary);
+            background-color: rgba(0, 71, 171, 0.05);
+        }
+        
+        .template-option.selected {
+            border-color: var(--primary);
+            background-color: rgba(0, 71, 171, 0.1);
+        }
+        
+        .template-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .template-name {
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 0.3rem;
+        }
+        
+        .template-desc {
+            font-size: 0.8rem;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+        
+        .file-preview {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: rgba(0, 71, 171, 0.05);
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .file-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .file-details {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .file-remove {
+            background: none;
+            border: none;
+            color: #e74c3c;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .file-remove:hover {
+            transform: scale(1.2);
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--modal-bg);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border-radius: 15px;
+            max-width: 900px;
+            width: 90%;
+            max-height: 90vh;
+            position: relative;
+            overflow: hidden;
+            animation: modalOpen 0.4s ease;
+        }
+        
+        @keyframes modalOpen {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            color: var(--white);
+            cursor: pointer;
+            z-index: 10;
+            background-color: rgba(0, 0, 0, 0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        
+        .modal-header {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+        }
+        
+        .modal-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .modal-body {
+            padding: 2rem;
+        }
+        
+        .modal-title {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .modal-description {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .modal-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        /* Success Message Styles */
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        body.dark-mode .success-message {
+            background-color: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+            border-color: rgba(40, 167, 69, 0.3);
+        }
+        
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary);
+            color: var(--white);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+        }
+        
+        /* Animation classes */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+        
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+        }
+        
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s ease;
+        }
+        
+        .animated {
+            opacity: 1;
+            transform: translate(0, 0);
+        }
+        
+        /* Hidden class for language switching */
+        .hidden {
+            display: none !important;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: absolute;
+                top: 70px;
+                right: -100%;
+                flex-direction: column;
+                background-color: var(--header-bg);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+                padding: 20px 0;
+                z-index: 99;
+            }
+            
+            .nav-menu.active {
+                right: 0;
+            }
+            
+            .nav-menu li {
+                margin: 1.5rem 0;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .hamburger.active .line1 {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+            
+            .hamburger.active .line2 {
+                opacity: 0;
+            }
+            
+            .hamburger.active .line3 {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            .hero {
+                padding: 7rem 0 4rem;
+            }
+            
+            .main-content {
+                margin-top: 70px;
+            }
+            
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .submission-container {
+                padding: 2rem 1.5rem;
+            }
+            
+            .submission-tabs {
+                flex-direction: column;
+            }
+            
+            .example-templates {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-actions {
+                flex-direction: column;
+            }
+            
+            .theme-toggle {
+                margin-left: 1rem;
+                font-size: 1rem;
+            }
+            
+            .language-switcher {
+                margin-left: 0.5rem;
+            }
+            
+            .lang-button {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .submission-container {
+                padding: 1.5rem 1rem;
+            }
+            
+            .example-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container nav-container">
+            <a href="/k7alishshop.html" class="logo">LNC <span>DEVS</span></a>
+            <div class="hamburger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/k7alishshop.html" data-translate="nav_home">Home</a></li>
+                <li><a href="#examples" data-translate="nav_examples">Examples</a></li>
+                <li><a href="#submission" data-translate="nav_submit">Submit Project</a></li>
+                <li><a href="./LNCT aboutus.html" data-translate="nav_about">about us</a></li>
+
+                <li>
+                    <div class="language-switcher">
+                        <button class="lang-button" id="langButton">
+                            <i class="fas fa-globe"></i>
+                            <span id="currentLang">EN</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="lang-dropdown" id="langDropdown">
+                            <div class="lang-option active" data-lang="en">
+                                <span>🇺🇸</span> English
+                            </div>
+                            <div class="lang-option" data-lang="fr">
+                                <span>🇫🇷</span> Français
+                            </div>
+                            <div class="lang-option" data-lang="ar">
+                                <span>🇸🇦</span> العربية
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </header>
+    
+    <div class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container hero-content">
+                <h1 data-translate="hero_title">Our Portfolio Showcase</h1>
+                <p data-translate="hero_subtitle">Explore our latest projects and see how we transform ideas into digital reality. Submit your own project or get inspired by our work.</p>
+            </div>
+        </section>
+        
+        <!-- Portfolio Examples Section -->
+        <section class="portfolio-examples" id="examples">
+            <div class="container">
+                <div class="section-header fade-up">
+                    <h2 data-translate="examples_title">Featured Projects</h2>
+                    <p data-translate="examples_subtitle">Discover our most successful projects and the technologies that power them.</p>
+                </div>
+                
+                <div class="examples-grid">
+                    <!-- Example 1 -->
+                    <div class="example-card fade-up" data-example="1">
+                        <div class="example-image">
+                            <img src="" alt="E-commerce Platform">
+                            <div class="example-overlay">
+                                <span data-translate="view_details">View Details</span>
+                            </div>
+                        </div>
+                        <div class="example-details">
+                            <h3 data-translate="project1_name">Agricultural company platform</h3>
+                            <p data-translate="project1_desc"></p>
+                            <div class="example-tech">
+                                <span class="tech-tag">HTML5</span>
+                                <span class="tech-tag">CSS 3</span>
+                                <span class="tech-tag">JS</span>
+                            </div>
+                            <div class="example-actions">
+                                <a href="https://louaiyoub.github.io/webs/" class="btn" data-translate="view_demo">Live Demo</a>
+                                <a href="https://github.com/louaiyoub/webs/blob/master/index.html" class="btn btn-outline" data-translate="view_code">Source Code</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+        
+        <!-- Project Submission Section -->
+        <section class="submission-section" id="submit">
+            <div class="container">
+                <div class="section-header fade-up">
+                    <h2 data-translate="submit_title">Submit Your Project</h2>
+                    <p data-translate="submit_subtitle">Share your project with us or request a custom website development.</p>
+                </div>
+                
+                <div class="submission-container fade-up">
+                    <div class="submission-tabs">
+                        <button class="tab-button active" data-tab="pdf-upload" data-translate="tab_pdf">Upload PDF Brief</button>
+                        <button class="tab-button" data-tab="custom-form" data-translate="tab_custom">Custom Website Request</button>
+                    </div>
+                    
+                    <!-- PDF Upload Tab -->
+                    <div class="tab-content active" id="pdf-upload">
+                        <form id="pdfUploadForm">
+                            <div class="upload-area" id="pdfUploadArea">
+                                <div class="upload-icon">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="upload-text" data-translate="pdf_upload_text">
+                                    Click to upload or drag and drop your PDF
+                                </div>
+                                <div class="upload-subtext" data-translate="pdf_upload_subtext">
+                                    PDF files up to 10MB
+                                </div>
+                                <input type="file" class="file-input" id="pdfFileInput" accept=".pdf">
+                            </div>
+                            <div class="file-preview" id="pdfPreview">
+                                <div class="file-info">
+                                    <div class="file-details">
+                                        <i class="fas fa-file-pdf" style="color: #e74c3c; font-size: 1.2rem;"></i>
+                                        <span class="file-name"></span>
+                                        <span class="file-size" style="opacity: 0.7; margin-left: 0.5rem;"></span>
+                                    </div>
+                                    <button type="button" class="file-remove">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="pdfProjectName" data-translate="form_project_name">Project Name</label>
+                                <input type="text" id="pdfProjectName" data-translate-placeholder="form_project_name_placeholder" placeholder="Enter your project name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="pdfClientName" data-translate="form_client_name">Your Name</label>
+                                <input type="text" id="pdfClientName" data-translate-placeholder="form_client_name_placeholder" placeholder="Enter your full name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="pdfClientEmail" data-translate="form_client_email">Email Address</label>
+                                <input type="email" id="pdfClientEmail" data-translate-placeholder="form_client_email_placeholder" placeholder="Enter your email address" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="pdfBudget" data-translate="form_budget">Budget Range</label>
+                                <select id="pdfBudget" required>
+                                    <option value="" data-translate="budget_select">Select your budget range</option>
+                                    <option value="1000-5000" data-translate="budget_1">$1,000 - $5,000</option>
+                                    <option value="5000-10000" data-translate="budget_2">$5,000 - $10,000</option>
+                                    <option value="10000-25000" data-translate="budget_3">$10,000 - $25,000</option>
+                                    <option value="25000+" data-translate="budget_4">$25,000+</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="pdfTimeline" data-translate="form_timeline">Project Timeline</label>
+                                <select id="pdfTimeline" required>
+                                    <option value="" data-translate="timeline_select">Select timeline</option>
+                                    <option value="1-2weeks" data-translate="timeline_1">1-2 weeks</option>
+                                    <option value="3-4weeks" data-translate="timeline_2">3-4 weeks</option>
+                                    <option value="1-2months" data-translate="timeline_3">1-2 months</option>
+                                    <option value="3months+" data-translate="timeline_4">3+ months</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="pdfAdditionalInfo" data-translate="form_additional_info">Additional Information</label>
+                                <textarea id="pdfAdditionalInfo" data-translate-placeholder="form_additional_info_placeholder" placeholder="Any additional details or requirements..."></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn" data-translate="submit_pdf">Submit PDF Brief</button>
+                            <div class="success-message" id="pdfSuccessMessage">
+                                <i class="fas fa-check-circle" style="margin-right: 0.5rem;"></i>
+                                <span data-translate="pdf_success">PDF brief submitted successfully! We'll review your project and contact you soon.</span>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Custom Form Tab -->
+                    <div class="tab-content" id="custom-form">
+                        <form id="customWebsiteForm">
+                            <div class="form-group">
+                                <label for="customProjectName" data-translate="form_project_name">Project Name</label>
+                                <input type="text" id="customProjectName" data-translate-placeholder="form_project_name_placeholder" placeholder="Enter your project name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="customClientName" data-translate="form_client_name">Your Name</label>
+                                <input type="text" id="customClientName" data-translate-placeholder="form_client_name_placeholder" placeholder="Enter your full name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="customClientEmail" data-translate="form_client_email">Email Address</label>
+                                <input type="email" id="customClientEmail" data-translate-placeholder="form_client_email_placeholder" placeholder="Enter your email address" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="customCompany" data-translate="form_company">Company/Organization</label>
+                                <input type="text" id="customCompany" data-translate-placeholder="form_company_placeholder" placeholder="Enter your company name (optional)">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label data-translate="form_website_type">Website Type</label>
+                                <div class="example-templates">
+                                    <div class="template-option" data-template="business">
+                                        <div class="template-icon">
+                                            <i class="fas fa-briefcase"></i>
+                                        </div>
+                                        <div class="template-name" data-translate="template_business">Business Website</div>
+                                        <div class="template-desc" data-translate="template_business_desc">Corporate site with services</div>
+                                    </div>
+                                    <div class="template-option" data-template="ecommerce">
+                                        <div class="template-icon">
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </div>
+                                        <div class="template-name" data-translate="template_ecommerce">E-commerce Store</div>
+                                        <div class="template-desc" data-translate="template_ecommerce_desc">Online shopping platform</div>
+                                    </div>
+                                    <div class="template-option" data-template="portfolio">
+                                        <div class="template-icon">
+                                            <i class="fas fa-paint-brush"></i>
+                                        </div>
+                                        <div class="template-name" data-translate="template_portfolio">Portfolio Site</div>
+                                        <div class="template-desc" data-translate="template_portfolio_desc">Showcase your work</div>
+                                    </div>
+                                    <div class="template-option" data-template="blog">
+                                        <div class="template-icon">
+                                            <i class="fas fa-blog"></i>
+                                        </div>
+                                        <div class="template-name" data-translate="template_blog">Blog/News Site</div>
+                                        <div class="template-desc" data-translate="template_blog_desc">Content management system</div>
+                                    </div>
+                                    <div class="template-option" data-template="webapp">
+                                        <div class="template-icon">
+                                            <i class="fas fa-desktop"></i>
+                                        </div>
+                                        <div class="template-name" data-translate="template_webapp">Web Application</div>
+                                        <div class="template-desc" data-translate="template_webapp_desc">Custom functionality</div>
+                                    </div>
+                                    <div class="template-option" data-template="other">
+                                        <div class="template-icon">
+                                            <i class="fas fa-ellipsis-h"></i>
+                                        </div>
+                                        <div class="template-name" data-translate="template_other">Other</div>
+                                        <div class="template-desc" data-translate="template_other_desc">Custom requirements</div>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="selectedTemplate" name="websiteType">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="customDescription" data-translate="form_project_description">Project Description</label>
+                                <textarea id="customDescription" data-translate-placeholder="form_project_description_placeholder" placeholder="Describe your project requirements, goals, and any specific features you need..." required></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="customBudget" data-translate="form_budget">Budget Range</label>
+                                <select id="customBudget" required>
+                                    <option value="" data-translate="budget_select">Select your budget range</option>
+                                    <option value="1000-5000" data-translate="budget_1">$1,000 - $5,000</option>
+                                    <option value="5000-10000" data-translate="budget_2">$5,000 - $10,000</option>
+                                    <option value="10000-25000" data-translate="budget_3">$10,000 - $25,000</option>
+                                    <option value="25000+" data-translate="budget_4">$25,000+</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="customTimeline" data-translate="form_timeline">Project Timeline</label>
+                                <select id="customTimeline" required>
+                                    <option value="" data-translate="timeline_select">Select timeline</option>
+                                    <option value="1-2weeks" data-translate="timeline_1">1-2 weeks</option>
+                                    <option value="3-4weeks" data-translate="timeline_2">3-4 weeks</option>
+                                    <option value="1-2months" data-translate="timeline_3">1-2 months</option>
+                                    <option value="3months+" data-translate="timeline_4">3+ months</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="customFeatures" data-translate="form_features">Desired Features</label>
+                                <textarea id="customFeatures" data-translate-placeholder="form_features_placeholder" placeholder="List any specific features you need (e.g., user login, payment processing, content management, etc.)"></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn" data-translate="submit_custom">Submit Custom Request</button>
+                            <div class="success-message" id="customSuccessMessage">
+                                <i class="fas fa-check-circle" style="margin-right: 0.5rem;"></i>
+                                <span data-translate="custom_success">Custom website request submitted successfully! We'll analyze your requirements and send you a detailed proposal.</span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Example Detail Modal -->
+        <div id="exampleModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal"><i class="fas fa-times"></i></span>
+                <div class="modal-header">
+                    <img class="modal-img" src="" alt="Project">
+                </div>
+                <div class="modal-body">
+                    <h3 class="modal-title">Project Title</h3>
+                    <p class="modal-description">Project description goes here...</p>
+                    <div class="modal-tech">
+                        <!-- Tech tags will be inserted here -->
+                    </div>
+                    <div class="modal-actions">
+                        <a href="#" class="btn" data-translate="view_demo">Live Demo</a>
+                        <a href="#" class="btn btn-outline" data-translate="view_code">Source Code</a>
+                        <a href="#" class="btn btn-outline" data-translate="contact_us">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Back to top button -->
+        <div class="back-to-top" id="backToTop">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script>
+        // Translations object
+        const translations = {
+            en: {
+                // Navigation
+                nav_home: "Home",
+                nav_examples: "Examples",
+                nav_submit: "Submit Project",
+                nav_contact: "Contact",
+                nav_about: "About Us",
+                
+                // Hero Section
+                hero_title: "Our Portfolio Showcase",
+                hero_subtitle: "Explore our latest projects and see how we transform ideas into digital reality. Submit your own project or get inspired by our work.",
+                
+                // Examples Section
+                examples_title: "Featured Projects",
+                examples_subtitle: "Discover our most successful projects and the technologies that power them.",
+                view_details: "View Details",
+                view_demo: "Live Demo",
+                view_code: "Source Code",
+                contact_us: "Contact Us",
+                
+                // Project Names and Descriptions
+                project1_name: "Agricultural company platform",
+                
+                // Submission Section
+                submit_title: "Submit Your Project",
+                submit_subtitle: "Share your project with us or request a custom website development.",
+                tab_pdf: "Upload PDF Brief",
+                tab_custom: "Custom Website Request",
+                
+                // PDF Upload Form
+                pdf_upload_text: "Click to upload or drag and drop your PDF",
+                pdf_upload_subtext: "PDF files up to 10MB",
+                
+                // Form Labels and Placeholders
+                form_project_name: "Project Name",
+                form_project_name_placeholder: "Enter your project name",
+                form_client_name: "Your Name",
+                form_client_name_placeholder: "Enter your full name",
+                form_client_email: "Email Address",
+                form_client_email_placeholder: "Entrez votre adresse email",
+                form_company: "Entreprise/Organisation",
+                form_company_placeholder: "Entrez le nom de votre entreprise (optionnel)",
+                form_budget: "Gamme de Budget",
+                form_timeline: "Chronologie du Projet",
+                form_additional_info: "Informations Supplémentaires",
+                form_additional_info_placeholder: "Détails supplémentaires ou exigences...",
+                form_project_description: "Description du Projet",
+                form_project_description_placeholder: "Décrivez les exigences de votre projet, les objectifs, et toutes fonctionnalités spécifiques dont vous avez besoin...",
+                form_features: "Fonctionnalités Désirées",
+                form_features_placeholder: "Listez toutes fonctionnalités spécifiques dont vous avez besoin (ex: connexion utilisateur, traitement de paiement, gestion de contenu, etc.)",
+                form_website_type: "Type de Site Web",
+                
+                // Budget Options
+                budget_select: "Sélectionnez votre gamme de budget",
+                budget_1: "$1,000 - $5,000",
+                budget_2: "$5,000 - $10,000",
+                budget_3: "$10,000 - $25,000",
+                budget_4: "$25,000+",
+                
+                // Timeline Options
+                timeline_select: "Sélectionnez la chronologie",
+                timeline_1: "1-2 semaines",
+                timeline_2: "3-4 semaines",
+                timeline_3: "1-2 mois",
+                timeline_4: "3+ mois",
+                
+                // Website Templates
+                template_business: "Site Web d'Entreprise",
+                template_business_desc: "Site corporate avec services",
+                template_ecommerce: "Boutique E-commerce",
+                template_ecommerce_desc: "Plateforme de shopping en ligne",
+                template_portfolio: "Site Portfolio",
+                template_portfolio_desc: "Présentez votre travail",
+                template_blog: "Site Blog/Actualités",
+                template_blog_desc: "Système de gestion de contenu",
+                template_webapp: "Application Web",
+                template_webapp_desc: "Fonctionnalité personnalisée",
+                template_other: "Autre",
+                template_other_desc: "Exigences personnalisées",
+                
+                // Submit Buttons
+                submit_pdf: "Soumettre Brief PDF",
+                submit_custom: "Soumettre Demande Personnalisée",
+                
+                // Success Messages
+                pdf_success: "Brief PDF soumis avec succès! Nous examinerons votre projet et vous contacterons bientôt.",
+                custom_success: "Demande de site web personnalisé soumise avec succès! Nous analyserons vos exigences et vous enverrons une proposition détaillée."
+            },
+            
+            ar: {
+                // Navigation
+                nav_home: "الرئيسية",
+                nav_examples: "الأمثلة",
+                nav_submit: "إرسال مشروع",
+                nav_contact: "اتصل بنا",
+                nav_about: "من نحن",
+                
+                // Hero Section
+                hero_title: "معرض أعمالنا",
+                hero_subtitle: "استكشف أحدث مشاريعنا وشاهد كيف نحول الأفكار إلى واقع رقمي. أرسل مشروعك الخاص أو استلهم من أعمالنا.",
+                
+                // Examples Section
+                examples_title: "المشاريع المميزة",
+                examples_subtitle: "اكتشف أنجح مشاريعنا والتقنيات التي تشغلها.",
+                view_details: "عرض التفاصيل",
+                view_demo: "عرض مباشر",
+                view_code: "الكود المصدري",
+                contact_us: "اتصل بنا",
+                
+                // Project Names and Descriptions
+                project1_name: "منصة شركة زراعية",
+                // Submission Section
+                submit_title: "أرسل مشروعك",
+                submit_subtitle: "شارك مشروعك معنا أو اطلب تطوير موقع ويب مخصص.",
+                tab_pdf: "تحميل ملف PDF",
+                tab_custom: "طلب موقع مخصص",
+                
+                // PDF Upload Form
+                pdf_upload_text: "انقر للتحميل أو اسحب وأفلت ملف PDF الخاص بك",
+                pdf_upload_subtext: "ملفات PDF حتى 10 ميجابايت",
+                
+                // Form Labels and Placeholders
+                form_project_name: "اسم المشروع",
+                form_project_name_placeholder: "أدخل اسم مشروعك",
+                form_client_name: "اسمك",
+                form_client_name_placeholder: "أدخل اسمك الكامل",
+                form_client_email: "عنوان البريد الإلكتروني",
+                form_client_email_placeholder: "أدخل عنوان بريدك الإلكتروني",
+                form_company: "الشركة/المؤسسة",
+                form_company_placeholder: "أدخل اسم شركتك (اختياري)",
+                form_budget: "نطاق الميزانية",
+                form_timeline: "الجدول الزمني للمشروع",
+                form_additional_info: "معلومات إضافية",
+                form_additional_info_placeholder: "أي تفاصيل إضافية أو متطلبات...",
+                form_project_description: "وصف المشروع",
+                form_project_description_placeholder: "صف متطلبات مشروعك والأهداف وأي ميزات محددة تحتاجها...",
+                form_features: "الميزات المرغوبة",
+                form_features_placeholder: "اذكر أي ميزات محددة تحتاجها (مثل: تسجيل دخول المستخدم، معالجة الدفع، إدارة المحتوى، إلخ)",
+                form_website_type: "نوع الموقع",
+                
+                // Budget Options
+                budget_select: "حدد نطاق الميزانية",
+                budget_1: "$1,000 - $5,000",
+                budget_2: "$5,000 - $10,000",
+                budget_3: "$10,000 - $25,000",
+                budget_4: "$25,000+",
+                
+                // Timeline Options
+                timeline_select: "حدد الجدول الزمني",
+                timeline_1: "1-2 أسبوع",
+                timeline_2: "3-4 أسابيع",
+                timeline_3: "1-2 شهر",
+                timeline_4: "3+ أشهر",
+                
+                // Website Templates
+                template_business: "موقع الأعمال",
+                template_business_desc: "موقع الشركة مع الخدمات",
+                template_ecommerce: "متجر إلكتروني",
+                template_ecommerce_desc: "منصة تسوق عبر الإنترنت",
+                template_portfolio: "موقع المعرض",
+                template_portfolio_desc: "اعرض أعمالك",
+                template_blog: "موقع المدونة/الأخبار",
+                template_blog_desc: "نظام إدارة المحتوى",
+                template_webapp: "تطبيق ويب",
+                template_webapp_desc: "وظائف مخصصة",
+                template_other: "أخرى",
+                template_other_desc: "متطلبات مخصصة",
+                
+                // Submit Buttons
+                submit_pdf: "إرسال ملف PDF",
+                submit_custom: "إرسال طلب مخصص",
+                
+                // Success Messages
+                pdf_success: "تم إرسال ملف PDF بنجاح! سنراجع مشروعك ونتواصل معك قريباً.",
+                custom_success: "تم إرسال طلب الموقع المخصص بنجاح! سنحلل متطلباتك ونرسل لك اقتراحاً مفصلاً."
+            },
+            // Additional languages can be added here
+            fr:{
+                // Navigation
+                nav_home: "Accueil",
+                nav_examples: "Exemples",
+                nav_submit: "Soumettre un projet",
+                
+                nav_about: "À propos",
+                
+                // Hero Section
+                hero_title: "Notre vitrine de portfolio",
+                hero_subtitle: "Explorez nos derniers projets et voyez comment nous transformons les idées en réalité numérique. Soumettez votre propre projet ou inspirez-vous de notre travail.",
+                
+                // Examples Section
+                examples_title: "Projets en vedette",
+                examples_subtitle: "Découvrez nos projets les plus réussis et les technologies qui les alimentent.",
+                view_details: "Voir les détails",
+                view_demo: "Démo en direct",
+                view_code: "Code source",
+                contact_us: "Contactez-nous",
+                
+                // Project Names and Descriptions
+                project1_name: "Plateforme d'entreprises agricoles",
+                
+                // Submission Section
+                submit_title: "Soumettez votre projet",
+                submit_subtitle: "Partagez votre projet avec nous ou demandez le développement d'un site web personnalisé.",
+                tab_pdf: "Télécharger un brief PDF",
+                tab_custom: "Demande de site web personnalisé",
+                // PDF Upload Form
+                pdf_upload_text: "Cliquez pour télécharger ou glissez-déposez votre PDF",
+                pdf_upload_subtext: "Fichiers PDF jusqu'à 10 Mo",
+                // Form Labels and Placeholders
+                form_project_name: "Nom du projet",
+                form_project_name_placeholder: "Entrez le nom de votre projet",
+                form_client_name: "Votre nom",
+                form_client_name_placeholder: "Entrez votre nom complet",
+                form_client_email: "Adresse e-mail",
+                form_client_email_placeholder: "Entrez votre adresse email",
+                form_company: "Entreprise/Organisation",
+                form_company_placeholder: "Entrez le nom de votre entreprise (optionnel)",
+                form_budget: "Gamme de budget",
+                form_timeline: "Chronologie du projet",
+                form_additional_info: "Informations supplémentaires",
+                form_additional_info_placeholder: "Détails supplémentaires ou exigences...",
+                form_project_description: "Description du projet",
+                form_project_description_placeholder: "Décrivez les exigences de votre projet, les objectifs, et toutes fonctionnalités spécifiques dont vous avez besoin...",
+                form_features: "Fonctionnalités désirées",
+                form_features_placeholder: "Listez toutes fonctionnalités spécifiques dont vous avez besoin (ex: connexion utilisateur, traitement de paiement, gestion de contenu, etc.)",
+                form_website_type: "Type de site web",
+                // Budget Options
+                budget_select: "Sélectionnez votre gamme de budget",
+                budget_1: "$1,000 - $5,000",
+                budget_2: "$5,000 - $10,000",
+                budget_3: "$10,000 - $25,000",
+                budget_4: "$25,000+",
+                // Timeline Options
+                timeline_select: "Sélectionnez la chronologie",
+                timeline_1: "1-2 semaines",
+                timeline_2: "3-4 semaines",
+                timeline_3: "1-2 mois",
+                timeline_4: "3+ mois",
+                // Website Templates
+                template_business: "Site web d'entreprise",
+                template_business_desc: "Site corporate avec services",
+                template_ecommerce: "Boutique e-commerce",
+                template_ecommerce_desc: "Plateforme de shopping en ligne",
+                template_portfolio: "Site portfolio",
+                template_portfolio_desc: "Présentez votre travail",
+                template_blog: "Site blog/actualités",
+                template_blog_desc: "Système de gestion de contenu",
+                template_webapp: "Application web",
+                template_webapp_desc: "Fonctionnalité personnalisée",
+                template_other: "Autre",
+                template_other_desc: "Exigences personnalisées",
+                // Submit Buttons
+                submit_pdf: "Soumettre brief PDF",
+                submit_custom: "Soumettre demande personnalisée",
+                // Success Messages
+                pdf_success: "Brief PDF soumis avec succès! Nous examinerons votre projet et vous contacterons bientôt.",
+                custom_success: "Demande de site web personnalisé soumise avec succès! Nous analyserons vos exigences et vous enverrons une proposition détaillée."
+            }
+            
+        };
+
+        // Language management
+        let currentLanguage = localStorage.getItem('language') || 'en';
+        
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('language', lang);
+            
+            // Update HTML attributes
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            
+            // Update current language display
+            document.getElementById('currentLang').textContent = lang.toUpperCase();
+            
+            // Update active language option
+            document.querySelectorAll('.lang-option').forEach(option => {
+                option.classList.remove('active');
+                if (option.getAttribute('data-lang') === lang) {
+                    option.classList.add('active');
+                }
+            });
+            
+            // Translate all elements
+            translatePage();
+        }
+        
+        function translatePage() {
+            const elementsToTranslate = document.querySelectorAll('[data-translate]');
+            const placeholderElements = document.querySelectorAll('[data-translate-placeholder]');
+            
+            elementsToTranslate.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[currentLanguage] && translations[currentLanguage][key]) {
+                    element.textContent = translations[currentLanguage][key];
+                }
+            });
+            
+            placeholderElements.forEach(element => {
+                const key = element.getAttribute('data-translate-placeholder');
+                if (translations[currentLanguage] && translations[currentLanguage][key]) {
+                    element.placeholder = translations[currentLanguage][key];
+                }
+            });
+        }
+
+        // DOM Elements
+        const header = document.getElementById('header');
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        const backToTopBtn = document.getElementById('backToTop');
+        const themeToggle = document.getElementById('themeToggle');
+        const langButton = document.getElementById('langButton');
+        const langDropdown = document.getElementById('langDropdown');
+        const langOptions = document.querySelectorAll('.lang-option');
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const exampleCards = document.querySelectorAll('.example-card');
+        const modal = document.getElementById('exampleModal');
+        const closeModal = document.querySelector('.close-modal');
+        const templateOptions = document.querySelectorAll('.template-option');
+        
+        // Check for saved theme preference or use preferred color scheme
+        const currentTheme = localStorage.getItem('theme') || 
+                            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        
+        // Set the theme on initial load
+        if (currentTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        
+        // Theme toggle functionality
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        }
+        
+        // Language dropdown toggle
+        function toggleLanguageDropdown() {
+            langDropdown.classList.toggle('active');
+        }
+        
+        // Toggle mobile menu
+        function toggleMobileMenu() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        }
+        
+        // Close mobile menu when clicking a nav link
+        function closeMobileMenu() {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            langDropdown.classList.remove('active');
+        }
+        
+        // Scroll effects
+        function handleScroll() {
+            // Header scroll effect
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+                backToTopBtn.classList.add('show');
+            } else {
+                header.classList.remove('scrolled');
+                backToTopBtn.classList.remove('show');
+            }
+            
+            // Animation on scroll
+            const animElements = document.querySelectorAll('.fade-up, .fade-in, .slide-in-left, .slide-in-right');
+            
+            animElements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const triggerPosition = window.innerHeight - 100;
+                
+                if (elementPosition < triggerPosition) {
+                    element.classList.add('animated');
+                }
+            });
+        }
+        
+        // Tab functionality
+        function switchTab(targetTab) {
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            const activeTabButton = document.querySelector(`[data-tab="${targetTab}"]`);
+            const activeTabContent = document.getElementById(targetTab);
+            
+            if (activeTabButton && activeTabContent) {
+                activeTabButton.classList.add('active');
+                activeTabContent.classList.add('active');
+            }
+        }
+        
+        // Template selection
+        function selectTemplate(template) {
+            templateOptions.forEach(option => option.classList.remove('selected'));
+            const selectedOption = document.querySelector(`[data-template="${template}"]`);
+            if (selectedOption) {
+                selectedOption.classList.add('selected');
+                document.getElementById('selectedTemplate').value = template;
+            }
+        }
+        
+        // Example modal functions
+        function openExampleModal(exampleData) {
+            const modalImg = modal.querySelector('.modal-img');
+            const modalTitle = modal.querySelector('.modal-title');
+            const modalDescription = modal.querySelector('.modal-description');
+            const modalTech = modal.querySelector('.modal-tech');
+            
+            modalImg.src = exampleData.image;
+            modalTitle.textContent = exampleData.title;
+            modalDescription.textContent = exampleData.description;
+            
+            // Clear and populate tech tags
+            modalTech.innerHTML = '';
+            exampleData.tech.forEach(tech => {
+                const techTag = document.createElement('span');
+                techTag.className = 'tech-tag';
+                techTag.textContent = tech;
+                modalTech.appendChild(techTag);
+            });
+            
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeExampleModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // File upload functionality
+        function setupFileUpload() {
+            const uploadArea = document.getElementById('pdfUploadArea');
+            const fileInput = document.getElementById('pdfFileInput');
+            const filePreview = document.getElementById('pdfPreview');
+            const fileName = filePreview.querySelector('.file-name');
+            const fileSize = filePreview.querySelector('.file-size');
+            const fileRemove = filePreview.querySelector('.file-remove');
+            
+            // Click to upload
+            uploadArea.addEventListener('click', () => fileInput.click());
+            
+            // File input change
+            fileInput.addEventListener('change', handleFileSelect);
+            
+            // Drag and drop
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+            
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('dragover');
+            });
+            
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handleFile(files[0]);
+                }
+            });
+            
+            // Remove file
+            fileRemove.addEventListener('click', () => {
+                fileInput.value = '';
+                filePreview.style.display = 'none';
+            });
+            
+            function handleFileSelect(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    handleFile(file);
+                }
+            }
+            
+            function handleFile(file) {
+                if (file.type === 'application/pdf' && file.size <= 10 * 1024 * 1024) { // 10MB limit
+                    fileName.textContent = file.name;
+                    fileSize.textContent = formatFileSize(file.size);
+                    filePreview.style.display = 'block';
+                } else {
+                    alert('Please select a valid PDF file under 10MB.');
+                }
+            }
+            
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+        }
+        
+        // Form submission handlers
+        function handlePdfFormSubmit(e) {
+            e.preventDefault();
+            
+            // Get success message in current language
+            const successMessage = document.getElementById('pdfSuccessMessage');
+            
+            // Simulate form submission
+            successMessage.style.display = 'block';
+            
+            // Reset form after a delay
+            setTimeout(() => {
+                e.target.reset();
+                document.getElementById('pdfPreview').style.display = 'none';
+                
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 5000);
+            }, 1500);
+        }
+        
+        function handleCustomFormSubmit(e) {
+            e.preventDefault();
+            
+            // Get success message in current language
+            const successMessage = document.getElementById('customSuccessMessage');
+            
+            // Simulate form submission
+            successMessage.style.display = 'block';
+            
+            // Reset form after a delay
+            setTimeout(() => {
+                e.target.reset();
+                templateOptions.forEach(option => option.classList.remove('selected'));
+                document.getElementById('selectedTemplate').value = '';
+                
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 5000);
+            }, 1500);
+        }
+        
+        // Example project data
+        const exampleProjects = {
+            1: {
+                title: "Agricultural company platform",
+                description: "A comprehensive platform for managing agricultural operations, including crop monitoring, resource management, and market analysis.",
+                tech: ["HTML5", "CSS3", "JS"]
+            },
+        };
+        
+        // Event Listeners
+        window.addEventListener('DOMContentLoaded', () => {
+            handleScroll(); // Call once to initialize
+            setLanguage(currentLanguage); // Set initial language
+            setupFileUpload();
+        });
+        
+        window.addEventListener('scroll', handleScroll);
+        
+        // Click outside language dropdown to close
+        document.addEventListener('click', (e) => {
+            if (!langButton.contains(e.target) && !langDropdown.contains(e.target)) {
+                langDropdown.classList.remove('active');
+            }
+        });
+        
+        hamburger.addEventListener('click', toggleMobileMenu);
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+        
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        themeToggle.addEventListener('click', toggleTheme);
+        langButton.addEventListener('click', toggleLanguageDropdown);
+        
+        langOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                setLanguage(option.getAttribute('data-lang'));
+                langDropdown.classList.remove('active');
+            });
+        });
+        
+        // Tab functionality
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetTab = button.getAttribute('data-tab');
+                switchTab(targetTab);
+            });
+        });
+        
+        // Template selection
+        templateOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const template = option.getAttribute('data-template');
+                selectTemplate(template);
+            });
+        });
+        
+        // Example cards
+        exampleCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const exampleId = card.getAttribute('data-example');
+                const exampleData = exampleProjects[exampleId];
+                if (exampleData) {
+                    openExampleModal(exampleData);
+                }
+            });
+        });
+        
+        // Modal close
+        closeModal.addEventListener('click', closeExampleModal);
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeExampleModal();
+            }
+        });
+        
+        // Form submissions
+        document.getElementById('pdfUploadForm').addEventListener('submit', handlePdfFormSubmit);
+        document.getElementById('customWebsiteForm').addEventListener('submit', handleCustomFormSubmit);
+    </script>
+</body>
+</html>
